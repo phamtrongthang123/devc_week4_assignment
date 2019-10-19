@@ -88,7 +88,7 @@ export default class AllScreen extends React.Component {
 
   render() {
     return (
-      <ImageBackground style={styles.container} source={{}}>
+      <ImageBackground style={styles.container} source={require('../assets/images/background.jpg')}>
         <KeyboardAvoidingView
           enabled
           behavior="padding"
