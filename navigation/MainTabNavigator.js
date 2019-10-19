@@ -25,7 +25,7 @@ CompleteStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-done-all' : 'md-link'}
+      name={Platform.OS === 'ios' ? 'ios-done-all' : 'md-done-all'}
     />
   )
 };
@@ -44,7 +44,7 @@ const AllStack = createStackNavigator(
 AllStack.navigationOptions = {
   tabBarLabel: 'All',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-add-circle'} />
   ),
 };
 
@@ -58,7 +58,7 @@ const ActiveStack = createStackNavigator(
 );
 
 ActiveStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+  tabBarLabel: 'Active',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
   ),

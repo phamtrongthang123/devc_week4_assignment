@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, View, Alert, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 import { TODOS } from '../utils/data.js';
 import {
@@ -7,45 +7,8 @@ import {
   KeyboardAvoidingView
 } from 'react-native';
 
-class TodoItem extends React.Component{
-  constructor(props){
-    super(props);
-  }
-  onLongPress = todo => {
-    const prompt = `"${todo.body}"`;
-    Alert.alert(
-      'Delete your todo?',
-      prompt,
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        { text: 'OK', onPress: () => this.props.onDeleteTodo(todo.id) }
-      ],
-      { cancelable: true }
-    );
-  };
-  render(){
-  statusStyle = {
-    backgroundColor: this.props.todo.status === 'Done' ? 'blue' : 'green'
-  };
-  return (
-    <TouchableOpacity
-      key={this.props.todo.body}
-      style={[styles.todoItem, statusStyle]}
-      onPress={() => this.props.onToggleTodo(this.props.todo.id)}
-      onLongPress={()=>this.onLongPress(this.props.todo)}
-    >
-      <Text style={styles.todoText}>
-        {this.props.idx + 1}: {this.props.todo.body}
-      </Text>
-    </TouchableOpacity>
-  );
-  }
-};
-
+import styles from '../utils/styles'
+import TodoItem from '../components/TodoItem'
 
 export default class AllScreen extends React.Component {
   constructor(props){
@@ -72,7 +35,7 @@ export default class AllScreen extends React.Component {
       this.props.navigation.navigate('SingleTodo', {
         updatedTodo: todo
       });
-    }, 1000);
+    }, 300);
     const todo = this.state.todoList.find(todo => todo.id === id);
     todo.status = todo.status === 'Done' ? 'Active' : 'Done';
     const foundIndex = this.state.todoList.findIndex(todo => todo.id === id);
@@ -96,15 +59,18 @@ export default class AllScreen extends React.Component {
           <ScrollView >
 
             <View style={styles.container}>
-              <View style={styles.container}>
-                {this.state.todoList.map((todo, idx) => {
-                  return <TodoItem
-                    key={todo.body}
-                    todo={todo}
-                    idx={idx}
-                    onToggleTodo={this.onToggleTodo}
-                    onDeleteTodo={this.onDeleteTodo} />;
-                })}
+
+              <View style={{ flex: 1}}>
+                <View >
+                  {this.state.todoList.map((todo, idx) => {
+                    return <TodoItem
+                      key={todo.body}
+                      todo={todo}
+                      idx={idx}
+                      onToggleTodo={this.onToggleTodo}
+                      onDeleteTodo={this.onDeleteTodo} />;
+                  })}
+                </View>
               </View>
               <View style={styles.inputContainer}>
                 <TextInput
@@ -128,60 +94,3 @@ export default class AllScreen extends React.Component {
 AllScreen.navigationOptions = {
   title: 'All Todos'
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    backgroundColor: 'black',
-    justifyContent: 'center'
-  },
-  todoItem: {
-    margin: 5,
-    padding: 10,
-    minHeight: 50,
-    width: '95%',
-    color: 'white',
-    borderRadius: 5,
-    flexWrap: 'wrap'
-  },
-  todoText: {
-    fontSize: 20,
-    color: 'white',
-    fontWeight: 'bold'
-  },
-  todoInput: {
-    width: '95%',
-    minHeight: 30,
-    color: 'white',
-    borderWidth: 1,
-    marginTop: '20%',
-    marginBottom: '5%',
-    borderColor: 'grey'
-  },
-  inputContainer: {
-    flex: 1,
-    width: '90%',
-    marginTop: 20,
-    marginBottom: '10%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 100
-  },
-  button: {
-    height: 50,
-    width: '50%',
-    borderRadius: 10,
-    alignItems: 'center',
-    backgroundColor: 'blue',
-    justifyContent: 'center'
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold'
-  },
-  scrollView: {
-    flex: 1,
-    paddingTop: 1000
-  }
-});
